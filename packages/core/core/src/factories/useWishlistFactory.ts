@@ -19,7 +19,7 @@ export interface UseWishlistFactoryParams<WISHLIST, WISHLIST_ITEM, PRODUCT> exte
       customQuery?: CustomQuery;
     }) => Promise<WISHLIST>;
   clear: (context: Context, params: { currentWishlist: WISHLIST }) => Promise<WISHLIST>;
-  isOnWishlist: (context: Context, params: { currentWishlist: WISHLIST; product: PRODUCT }) => boolean;
+  isInWishlist: (context: Context, params: { currentWishlist: WISHLIST; product: PRODUCT }) => boolean;
 }
 
 export const useWishlistFactory = <WISHLIST, WISHLIST_ITEM, PRODUCT>(
@@ -116,10 +116,10 @@ export const useWishlistFactory = <WISHLIST, WISHLIST_ITEM, PRODUCT>(
       }
     };
 
-    const isOnWishlist = ({ product }) => {
-      Logger.debug('useWishlist.isOnWishlist', product);
+    const isInWishlist = ({ product }) => {
+      Logger.debug('useWishlist.isInWishlist', product);
 
-      return factoryParams.isOnWishlist(context, {
+      return factoryParams.isInWishlist(context, {
         currentWishlist: wishlist.value,
         product
       });
@@ -127,7 +127,7 @@ export const useWishlistFactory = <WISHLIST, WISHLIST_ITEM, PRODUCT>(
 
     return {
       wishlist: computed(() => wishlist.value),
-      isOnWishlist,
+      isInWishlist,
       addItem,
       load,
       removeItem,
